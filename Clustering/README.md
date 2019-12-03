@@ -1,1 +1,1 @@
-This folder contians the data science and machine learning projects which have been catgorized as Regression problems.
+This folder contians the data science and machine learning projects which have been catgorized as Clustering problems.
