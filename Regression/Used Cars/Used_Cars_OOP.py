@@ -1,17 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 '''This script gets data from used cars, builds and tests several predictive models,
    and then makes price predictions on test data using the best model.'''
 
 
 # # Import required libraries
-
-# In[ ]:
-
 
 import pandas as pd
 import numpy as np
@@ -20,9 +11,6 @@ import seaborn as sns
 
 
 # # Define data class
-
-# In[ ]:
-
 
 class Data:
     def __init__(self, train_file_path, test_file_path, target_var, num_features, cat_features):
@@ -182,9 +170,6 @@ class Data:
 
 # # Define feature engineering class
 
-# In[ ]:
-
-
 class FeatureEngineering:
     def __init__(self, data, encode=True, scale=False):
         '''performs feature engineering nad feature selection for modeling'''
@@ -229,9 +214,6 @@ class FeatureEngineering:
 
 
 # # Define modeling class
-
-# In[ ]:
-
 
 class Modeling:
     def __init__(self, models={}):
@@ -303,9 +285,6 @@ class Modeling:
 
 # # Define parameters for creating models
 
-# In[ ]:
-
-
 train_file_path = 'C:/Users/mehdi/Downloads/used-cars-price-prediction/train-data.csv'
 test_file_path = 'C:/Users/mehdi/Downloads/used-cars-price-prediction/test-data.csv'
 target_var = ['Price']
@@ -315,16 +294,10 @@ cat_features = ['Name', 'Location', 'Fuel_Type', 'Transmission', 'Owner_Type']
 
 # # Create a Data object
 
-# In[ ]:
-
-
 data = Data(train_file_path, test_file_path, target_var, num_features, cat_features)
 
 
 # # Get summary of data sets for EDA
-
-# In[ ]:
-
 
 data.target_summary()
 data.train_summary()
@@ -332,9 +305,6 @@ data.test_summary()
 
 
 # # Create visuals of data for EDA
-
-# In[ ]:
-
 
 data.visualize_target_var()
 data.visualize_num_features()
@@ -344,16 +314,10 @@ data.plot_heatmap()
 
 # # Apply feature engineering
 
-# In[ ]:
-
-
 myfeatures = FeatureEngineering(data)
 
 
 # # Create and run models, then select the best one
-
-# In[ ]:
-
 
 mymodel = Modeling()
 
@@ -372,9 +336,6 @@ mymodel.modeling_summary(data, metric='r2')
 
 # # Tune the hyperparameters of the best model
 
-# In[ ]:
-
-
 hyper_parameters = [{'n_estimators': [40, 60, 100],
                      'max_depth': [5, 15, 40],
                      'min_samples_split': [40, 80, 100],
@@ -385,16 +346,9 @@ mymodel.model_tuning(hyper_parameters)
 
 # # Get feature importances
 
-# In[ ]:
-
-
 mymodel.get_feature_importance()
 
 
 # # Create predictions and save results of the test data
 
-# In[ ]:
-
-
 mymodel.save_results('C:/Users/mehdi/Downloads/used-cars-price-prediction')
-
