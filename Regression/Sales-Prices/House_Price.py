@@ -40,7 +40,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
 
 # Preprocessing for numerical data
-numerical_transformer = SimpleImputer(strategy='constant')
+numerical_transformer = SimpleImputer(strategy = 'mean')
 
 # Preprocessing for categorical data
 categorical_transformer = Pipeline(steps=[
@@ -54,7 +54,7 @@ preprocessor = ColumnTransformer(
         ('num', numerical_transformer, numerical_cols),
         ('cat', categorical_transformer, categorical_cols)
     ])
-
+#############################################################################
 # Define model
 model = RandomForestRegressor(n_estimators=100, random_state=0)
 
@@ -68,43 +68,7 @@ clf.fit(X_train, y_train)
 
 # Preprocessing of validation data, get predictions
 preds = clf.predict(X_valid)
-
-print('MAE:', mean_absolute_error(y_valid, preds))
-
-# Preprocessing for numerical data
-numerical_transformer = SimpleImputer(strategy = 'mean') # Your code here
-
-# Preprocessing for categorical data
-categorical_transformer = Pipeline(steps = [
-    ('impute', SimpleImputer(strategy = 'most_frequent')),
-    ('encode', OneHotEncoder(handle_unknown = 'ignore'))
-]) # Your code here
-
-# Bundle preprocessing for numerical and categorical data
-preprocessor = ColumnTransformer(
-    transformers=[
-        ('num', numerical_transformer, numerical_cols),
-        ('cat', categorical_transformer, categorical_cols)
-    ])
-
-# Define model
-model = RandomForestRegressor(n_estimators = 100) # Your code here
-
-# Bundle preprocessing and modeling code in a pipeline
-my_pipeline = Pipeline(steps=[('preprocessor', preprocessor),
-                              ('model', model)
-                             ])
-
-# Preprocessing of training data, fit model 
-my_pipeline.fit(X_train, y_train)
-
-# Preprocessing of validation data, get predictions
-preds = my_pipeline.predict(X_valid)
-
+#############################################################################
 # Evaluate the model
 score = mean_absolute_error(y_valid, preds)
 print('MAE:', score)
-
-# Preprocessing of test data, fit model
-preds_test = my_pipeline.predict(X_test) # Your code here
-
